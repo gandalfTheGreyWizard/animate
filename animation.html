@@ -1,0 +1,276 @@
+<canvas id="myCanvas" style="background-color: black;">
+	
+</canvas>
+<script type="text/javascript">
+	var canvas = document.getElementById("myCanvas");
+	var ctx = canvas.getContext('2d');
+	ctx.fillStyle = "rgb(0,0,0)";
+	canvas.width = screen.width ;
+	canvas.height = screen.height;
+	ctx.lineWidth = 2;
+	ctx.strokeStyle = "rgb(255,255,255)";
+	//ctx.fillRect(0,0,175,175);
+	/*ctx.moveTo(0,0);
+	ctx.lineTo(200,200);
+	ctx.stroke();
+	ctx.moveTo(200,200);
+	ctx.lineTo(400,0);
+	ctx.stroke();
+	console.log(canvas.width);
+	console.log(canvas.height);*/
+	var flag = 0;
+	var animate = setInterval(animateline,5);
+	var linex = 0;
+	var liney = 100,line2y=300;
+	var line2x = 0;
+	var sweep_angle = 3*Math.PI/2;
+	var lessliney=lesslinex=lessline2x=lessline2y=0;
+	var linecut = 0;
+	
+	var textstart = Math.floor(screen.width/4);
+	function animateline(){
+		if(flag == 0)
+		{
+			ctx.moveTo(linex,100);
+			linex+=4;
+			ctx.lineTo(linex,100);
+			ctx.moveTo(line2x,300);line2x+=4;
+			ctx.lineTo(line2x,300);
+			ctx.stroke();
+			if(linex > textstart)
+				{lessliney = liney;lesslinex = linex-20;lessline2x = line2x-20;lessline2y = line2y;flag = 1;}
+		}
+		if(linex > textstart && flag == 1)
+		{
+			
+			ctx.strokeWidth = 20;
+			ctx.moveTo(linex,liney);
+			linex+=2;liney+=4;
+			ctx.lineTo(linex,liney);
+			ctx.moveTo(lesslinex,lessliney);
+			lesslinex +=2;lessliney += 4;
+			ctx.lineTo(lesslinex,lessliney);
+			ctx.moveTo(line2x,line2y);
+			line2x+=2;line2y-=4;
+			ctx.lineTo(line2x,line2y);
+			ctx.moveTo(lessline2x,lessline2y);
+			lessline2x +=2;lessline2y -= 4;
+			ctx.lineTo(lessline2x,lessline2y);
+			ctx.stroke();
+
+			if(liney==300)
+			{
+				flag = 2
+			}
+			ctx.moveto
+		}
+		if(flag == 2)
+		{
+			if(lesslinex > linex)
+			{
+				flag = 3;
+			}
+			ctx.moveTo(lesslinex,lessliney);
+			lesslinex+=2;
+			ctx.lineTo(lesslinex,lessliney);
+			ctx.stroke();
+			ctx.moveTo(lessline2x,lessline2y);
+			lessline2x+=2;
+			ctx.lineTo(lessline2x,lessline2y);
+			ctx.stroke();
+		}
+		if(flag == 3)
+		{
+			ctx.moveTo(lesslinex,lessliney);
+			lessliney-=4;
+			ctx.lineTo(lesslinex,lessliney);
+			ctx.moveTo(lessline2x,lessline2y);
+			lessline2x+=2;
+			ctx.lineTo(lessline2x,lessline2y);
+			ctx.stroke();
+			if(lessliney <190 )
+			{
+				flag = 4;
+				linecut = lesslinex+20;
+			}
+
+		}
+		if(flag == 4)
+		{	
+			ctx.moveTo(lesslinex,lessliney);
+			lesslinex+=2;
+			ctx.lineTo(lesslinex,lessliney);
+			ctx.stroke();
+			if(lesslinex > linecut)
+			{
+				flag = 5;
+				lessliney = 248;
+			}
+		}
+		if(flag != 0 && flag!=1)
+		{
+			ctx.moveTo(lessline2x,lessline2y);
+			lessline2x+=2;
+			ctx.lineTo(lessline2x,lessline2y);
+			ctx.stroke();
+		}
+
+		if(flag == 5)
+		{
+			ctx.beginPath();
+			ctx.arc(lesslinex,218,30,3*Math.PI/2,sweep_angle);
+			sweep_angle += Math.PI/180*8;
+			ctx.stroke();
+			if(sweep_angle > 5/2*Math.PI)
+			{
+				flag = 6;
+			}
+		}
+		if(flag == 6)
+		{
+			ctx.moveTo(lesslinex,lessliney);
+			lessliney+=2;
+			ctx.lineTo(lesslinex,lessliney);
+			ctx.stroke();
+			if(lessliney > 300)
+			{
+				flag = 7;
+				linecut = lesslinex + 40;
+			}
+		}
+		if(flag == 7)
+		{
+			ctx.moveTo(lesslinex,lessliney);
+			lesslinex +=2;
+			ctx.lineTo(lesslinex,lessliney);
+			ctx.stroke();
+			if(lesslinex > linecut)
+			{
+				flag = 8;
+			}
+		}
+		if(flag == 8)
+		{
+			ctx.moveTo(lesslinex,lessliney);
+			lesslinex +=2;lessliney-=4;
+			ctx.lineTo(lesslinex,lessliney);
+			ctx.stroke();
+			if(lessliney < 190)
+			{
+				flag =9;
+			}
+		}
+		if(flag == 9)
+		{
+			ctx.moveTo(lesslinex,lessliney);
+			lesslinex+=2;lessliney+=4;
+			ctx.lineTo(lesslinex,lessliney);
+			ctx.stroke()
+			if(lessliney > 300)
+			{
+				flag = 10;
+				ctx.moveTo(lesslinex,lessliney);
+				ctx.lineTo(lesslinex+20,lessliney);
+				ctx.stroke();
+				lesslinex = lesslinex+20;
+			}
+		}
+		if(flag == 10)
+		{
+			ctx.moveTo(lesslinex,lessliney);
+			lessliney -= 4;
+			ctx.lineTo(lesslinex,lessliney);
+			ctx.stroke();
+			if(lessliney < 190)
+			{
+				ctx.moveTo(lesslinex,lessliney);
+				ctx.lineTo(lesslinex+20,lessliney);
+				ctx.stroke();
+				lesslinex = lesslinex+20;
+				flag = 11;
+			}
+		}
+		if(flag == 11)
+		{
+			ctx.moveTo(lesslinex,lessliney);
+			lessliney+=4;lesslinex+=2;
+			ctx.lineTo(lesslinex,lessliney);
+			ctx.stroke();
+			if(lessliney > 280)
+			{
+				flag = 12;
+			}
+		}
+		if(flag == 12)
+		{
+			ctx.moveTo(lesslinex,lessliney);
+			lessliney -= 4;
+			ctx.lineTo(lesslinex,lessliney);
+			ctx.stroke();
+			if(lessliney < 190)
+			{
+				ctx.moveTo(lesslinex,lessliney);
+				ctx.lineTo(lesslinex+20,lessliney);
+				ctx.stroke();
+				lesslinex = lesslinex+20;
+				flag = 13;
+			}
+		}
+		if(flag == 13)
+		{
+			ctx.moveTo(lesslinex,lessliney);
+			lessliney+=4;lesslinex;
+			ctx.lineTo(lesslinex,lessliney);
+			ctx.stroke();
+			if(lessliney > 300)
+			{	ctx.moveTo(lesslinex,lessliney);
+				ctx.lineTo(lesslinex+20,lessliney);
+				ctx.stroke();
+				lesslinex = lesslinex+20;
+				flag = 14;
+			}
+		}
+		if(flag == 14)
+		{
+			ctx.moveTo(lesslinex,lessliney);
+			lessliney -= 4;
+			ctx.lineTo(lesslinex,lessliney);
+			ctx.stroke();
+			if(lessliney < 190)
+			{
+				ctx.moveTo(lesslinex,lessliney);
+				ctx.lineTo(lesslinex+20,lessliney);
+				ctx.stroke();
+				lesslinex = lesslinex+20;
+				flag = 15;
+				sweep_angle = 3*Math.PI / 2;
+			}
+		}
+		if(flag == 15)
+		{
+			ctx.beginPath();
+			ctx.arc(lesslinex,lessliney+58,58,3*Math.PI/2,sweep_angle);
+			sweep_angle += Math.PI / 180 * 8;
+			ctx.stroke();
+			if(sweep_angle > 5*Math.PI / 2)
+			{
+				flag = 16;lessliney = 302;
+			}
+		}
+		if(flag == 16)
+		{
+			ctx.moveTo(lesslinex,lessliney);
+			lesslinex+=8;
+			ctx.lineTo(lesslinex,lessliney);
+			ctx.stroke();
+
+		}
+		if(lesslinex > screen.width)
+		{
+			clearInterval(animate);
+		}
+		
+		
+	}
+
+</script>
